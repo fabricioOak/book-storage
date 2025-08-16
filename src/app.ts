@@ -6,6 +6,7 @@ import {
 } from "@fastify/type-provider-typebox";
 import { fastifySwagger } from "@fastify/swagger";
 import scalarAPIReference from "@scalar/fastify-api-reference";
+import routes from "./routes/index.ts";
 
 const server = fastify({
 	genReqId: () => randomUUID(),
@@ -36,5 +37,7 @@ if (process.env.NODE_ENV === "development") {
 }
 
 server.setValidatorCompiler(TypeBoxValidatorCompiler);
+
+server.register(routes, { prefix: "/api" });
 
 export { server };
