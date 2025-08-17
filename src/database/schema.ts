@@ -1,8 +1,9 @@
-import { MySqlColumnBuilderWithAutoIncrement } from "drizzle-orm/mysql-core";
 import { uuid, text, pgEnum, pgTable } from "drizzle-orm/pg-core";
+import { EUserGender, EUserRoles } from "../enums/user.ts";
+import { enumToPgEnum } from "../utils/drizzleUtils.ts";
 
-export const userRole = pgEnum("user_role", ["manager", "student", "teacher"]);
-export const userGender = pgEnum("user_gender", ["male", "female", "other"]);
+export const userRole = pgEnum("user_role", enumToPgEnum(EUserRoles));
+export const userGender = pgEnum("user_gender", enumToPgEnum(EUserGender));
 
 export const users = pgTable("users", {
 	id: uuid().primaryKey().defaultRandom(),
@@ -10,7 +11,7 @@ export const users = pgTable("users", {
 	socialName: text("social_name"),
 	email: text().notNull().unique(),
 	password: text().notNull(),
-	role: userRole().notNull().default("student"),
+	role: userRole().notNull().default(EUserRoles.Student),
 	document: text().notNull(),
 	gender: userGender().notNull(),
 	birthDate: text("birth_date").notNull(),
