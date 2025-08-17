@@ -7,7 +7,6 @@ export function formatDateToISO(dateStr: string): string {
 	const year = dateStr.slice(4, 8);
 	const isoDate = `${year}-${month}-${day}`;
 
-	// Validação básica: cria um Date para checar se é válido
 	const dateObj = new Date(isoDate);
 	if (isNaN(dateObj.getTime())) {
 		throw new Error("Invalid date value");
